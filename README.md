@@ -27,6 +27,6 @@ const Stky = new stickIt('js-sticky', {
     
     watchCSS: false
     // watches the content of :after of the element
-    // activates if #element:after { content: 'sticky' }
+    // activates if #element:after { content: 'stick-it' }
 }
 ```

@@ -147,8 +147,8 @@ export default class StickyIt {
 
         const afterContent = getComputedStyle( _.$el, ':after' ).content;
         
-        // activate if :after { content: 'sticky' }
-        if ( afterContent.indexOf('sticky') != -1 ) {
+        // activate if :after { content: 'stick-it' }
+        if ( afterContent.indexOf('stick-it') != -1 ) {
             _.isActive = true
         } else {
             _.isActive = false
