@@ -1,6 +1,6 @@
 {
   "name": "stick-it",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Lightweight plugin to stick an element of the DOM within a bounding container",
   "main": "index.js",
   "repository": {
