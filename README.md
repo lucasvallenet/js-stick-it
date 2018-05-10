@@ -2,6 +2,11 @@
 
 Lightweight plugin to stick an element of the DOM within a bounding container.
 
+## Installation
+```
+yarn add stick-it
+```
+
 ## Usage
 
 ```js
