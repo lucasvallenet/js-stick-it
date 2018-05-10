@@ -1,6 +1,6 @@
 # Stick It
 
-Lightweight plugin to stick an element of the DOM.
+Lightweight plugin to stick an element of the DOM within a bounding container.
 
 ## Usage
 
@@ -17,7 +17,10 @@ const Stky = new stickIt('js-sticky', {
     // options, defaults listed
     
     bound: 'body',
-    // the bounding element 
+    // the bounding container
+    
+    class: false,
+    // the class to be added to the element when it is stuck
     
     offset: 0,
     // top offset of the initial sticking position by of number of pixels

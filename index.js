@@ -13,6 +13,7 @@ export default class StickyIt {
 
         _.opts = {
             bound: 'body',
+            class: false,
             offset: 0,
             watchCSS: false
         }
@@ -31,9 +32,11 @@ export default class StickyIt {
         _.cloneElement()
         if(_.opts.watchCSS) _.watchCSS()
 
+        _.scroll()
+
         // Bind events
-        window.addEventListener('scroll', _.scroll.bind(_))
-        window.addEventListener('resize', _.resize.bind(_))
+        window.addEventListener('scroll', _.scrollHandler = _.scroll.bind(_))
+        window.addEventListener('resize', _.updateHandler = _.update.bind(_))
     }
 
     setOpts(options) {
@@ -73,7 +76,7 @@ export default class StickyIt {
 
     scroll(){
         const _ = this;
-        // console.log('StickIt:scroll');
+        console.log('StickIt:scroll');
         
         if(!_.isActive) return
 
@@ -87,25 +90,42 @@ export default class StickyIt {
                 top: `${_.opts.offset}px`,
                 left: `${_.el.offsetLeft}px`
             });
+
+            if(_.opts.class) {
+                _.$el.classList.add(_.opts.class)
+            }
+
             _.isSticky = true
+
         } else if(_.isSticky) {
             if(window.scrollY + _.opts.offset < _.el.offsetTop) {
                 _.$el.removeAttribute('style')
+
+                if(_.opts.class) {
+                    _.$el.classList.remove(_.opts.class)
+                }
+                
                 _.isSticky = false
+
             } else if (window.scrollY + _.opts.offset > _.el.offsetTop + _.boundHeight - _.el.height) {
                 Object.assign(_.$el.style, {
                     position: '',
                     top: `${_.boundHeight - _.el.height + _.opts.offset}px`,
                     left: ''
                 });
+
+                if(_.opts.class) {
+                    _.$el.classList.remove(_.opts.class)
+                }
+                
                 _.isSticky = false
             }
         }
     }
 
-    resize(){
+    update(){
         const _ = this;
-        // console.log('StickIt:resize');
+        // console.log('StickIt:update');
         
         if(_.opts.watchCSS) _.watchCSS()
 
@@ -134,5 +154,19 @@ export default class StickyIt {
             _.isActive = false
             _.$el.removeAttribute('style')
         }
-    };
+    }
+
+    destroy() {
+        const _ = this;
+        console.log('StickIt:destroy')
+
+        _.$el.removeAttribute('style')
+
+        if(_.opts.class) {
+            _.$el.classList.remove(_.opts.class)
+        }
+
+        window.removeEventListener('scroll', _.scrollHandler)
+        window.removeEventListener('update', _.updateHanlder)
+    }
 }
