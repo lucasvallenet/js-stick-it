@@ -170,16 +170,4 @@ class stickIt {
     }
 }
 
-/**
- * Export function that supports AMD, CommonJS and Plain Browser.
- */
-((root, factory) => {
-    if (typeof exports !== 'undefined') {
-    } else if (typeof define === 'function' && define.amd) {
-        define([], function() {
-            return factory;
-        });
-    } else {
-        root.stickIt = factory;
-    }
-})(this, stickIt);
+module.exports = stickIt;
