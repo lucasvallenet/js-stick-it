@@ -1,16 +1,16 @@
 /**
-    * Sticky and unstick an element from the DOM
+    * Stick and unstick an element from the DOM
     * @param  {String} element   The element to stick
     * @param  {String} bound     The bounding element
     * @param  {Object} options   An object containing all the options
     * @return {Void}
 */
 
-export default class Sticky {
+export default class StickyIt {
 
     constructor(element, bound, options){
         const _ = this;
-        // console.log('Sticky:constructor', element, bound);
+        // console.log('StickIt:constructor', element, bound);
 
         _.opts = {
             offset: 0,
@@ -38,14 +38,14 @@ export default class Sticky {
 
     setOpts(options) {
         const _ = this;
-        // console.log('Sticky:setOpts');
+        // console.log('StickIt:setOpts');
         _.opts = Object.assign({}, _.opts, options);
     }
 
     // Clone the element to stick
     cloneElement(){
         const _ = this;
-        // console.log('Sticky:cloneElement');
+        // console.log('StickIt:cloneElement');
 
         _.$clone = _.$el.cloneNode(true)
         _.$el.parentElement.appendChild(_.$clone)
@@ -60,7 +60,7 @@ export default class Sticky {
 
     setSizes(){
         const _ = this;
-        // console.log('Sticky:setSizes');
+        // console.log('StickIt:setSizes');
 
         const rect = _.$clone.getBoundingClientRect()
         _.el = {
@@ -73,7 +73,7 @@ export default class Sticky {
 
     scroll(){
         const _ = this;
-        // console.log('Sticky:scroll');
+        // console.log('StickIt:scroll');
         
         if(!_.isActive) return
 
@@ -105,7 +105,7 @@ export default class Sticky {
 
     resize(){
         const _ = this;
-        // console.log('Sticky:resize');
+        // console.log('StickIt:resize');
         
         if(_.opts.watchCSS) _.watchCSS()
 
