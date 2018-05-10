@@ -17,7 +17,8 @@ class stickIt {
             watchCSS: false
         }
         
-        _.setOpts(options);
+        // Expend with default options
+        _.opts = Object.assign({}, _.opts, options);
 
         // Set DOM vars
         _.$el = document.querySelector(element)
@@ -29,20 +30,18 @@ class stickIt {
         _.isActive = true;
 
         _.cloneElement()
-        if(_.opts.watchCSS) _.watchCSS()
 
-        _.scroll()
+        if(_.opts.watchCSS) {
+            _.watchCSS()
+        }
+
+        _.update()
 
         // Bind events
-        window.addEventListener('scroll', _.scrollHandler = _.scroll.bind(_))
-        window.addEventListener('resize', _.updateHandler = _.update.bind(_))
+        window.addEventListener('scroll', _.updateHandler = _.update.bind(_))
+        window.addEventListener('resize', _.resizeHandler = _.resize.bind(_))
     }
 
-    setOpts(options) {
-        const _ = this;
-        // console.log('stickIt:setOpts');
-        _.opts = Object.assign({}, _.opts, options);
-    }
 
     // Clone the element to stick
     cloneElement(){
@@ -73,9 +72,9 @@ class stickIt {
         _.boundHeight = _.$bound.offsetHeight
     }
 
-    scroll(){
+    update(){
         const _ = this;
-        console.log('stickIt:scroll');
+        // console.log('stickIt:update');
         
         if(!_.isActive) return
 
@@ -122,15 +121,15 @@ class stickIt {
         }
     }
 
-    update(){
+    resize(){
         const _ = this;
-        // console.log('stickIt:update');
+        // console.log('stickIt:resize');
         
         if(_.opts.watchCSS) _.watchCSS()
 
         if(!_.opts.watchCSS || _.isActive) {
             _.setSizes()
-            _.scroll()
+            _.update()
             if(_.isSticky) {
                 _.$el.style.left = `${_.el.offsetLeft}px`
             }
@@ -157,7 +156,7 @@ class stickIt {
 
     destroy() {
         const _ = this;
-        console.log('stickIt:destroy')
+        // console.log('stickIt:destroy')
 
         _.$el.removeAttribute('style')
 
@@ -165,8 +164,8 @@ class stickIt {
             _.$el.classList.remove(_.opts.class)
         }
 
-        window.removeEventListener('scroll', _.scrollHandler)
-        window.removeEventListener('update', _.updateHanlder)
+        window.removeEventListener('scroll', _.updateHandler)
+        window.removeEventListener('resize', _.resizeHanlder)
     }
 }
 
