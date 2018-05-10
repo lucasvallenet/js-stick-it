@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Lightweight plugin to stick an element of the DOM within a bounding container",
   "main": "index.js",
-  "repository":  {
+  "repository": {
     "url": "git@github.com:lucasvallenet/js-stick-it.git",
     "type": "git"
   },
