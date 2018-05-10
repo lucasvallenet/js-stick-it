@@ -1,18 +1,18 @@
 /**
     * Stick and unstick an element from the DOM
     * @param  {String} element   The element to stick
-    * @param  {String} bound     The bounding element
     * @param  {Object} options   An object containing all the options
     * @return {Void}
 */
 
 export default class StickyIt {
 
-    constructor(element, bound, options){
+    constructor(element, options){
         const _ = this;
-        // console.log('StickIt:constructor', element, bound);
+        // console.log('StickIt:constructor', element);
 
         _.opts = {
+            bound: 'body',
             offset: 0,
             watchCSS: false
         }
@@ -21,7 +21,7 @@ export default class StickyIt {
 
         // Set DOM vars
         _.$el = document.querySelector(element)
-        _.$bound = document.querySelector(bound)
+        _.$bound = document.querySelector(_.opts.bound)
 
         // Return if element/bound doesn't exist
         if(_.$el === undefined || _.$bound === undefined) return;

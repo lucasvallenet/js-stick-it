@@ -7,17 +7,20 @@ Lightweight plugin to stick an element of the DOM.
 ```js
 import stickIt from 'stick-it'
 
-const Stky = new stickIt('js-sticky', 'body')
+const Stky = new stickIt('js-sticky')
 ```
 
 ## Options
 
 ```js
-const Stky = new stickIt('js-sticky', 'body', {
+const Stky = new stickIt('js-sticky', {
     // options, defaults listed
     
+    bound: 'body',
+    // the bounding element 
+    
     offset: 0,
-    // the offset top to stick the element
+    // top offset of the initial sticking position by of number of pixels
     
     watchCSS: false
     // watches the content of :after of the element
