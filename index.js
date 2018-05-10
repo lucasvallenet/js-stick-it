@@ -1,15 +1,14 @@
 /**
-    * Stick and unstick an element from the DOM
-    * @param  {String} element   The element to stick
-    * @param  {Object} options   An object containing all the options
-    * @return {Void}
+ * Stick and unstick an element from the DOM
+ * @param  {String} element   The element to stick
+ * @param  {Object} options   An object containing all the options
 */
 
-export default class StickyIt {
+class stickIt {
 
     constructor(element, options){
         const _ = this;
-        // console.log('StickIt:constructor', element);
+        // console.log('stickIt:constructor', element);
 
         _.opts = {
             bound: 'body',
@@ -41,14 +40,14 @@ export default class StickyIt {
 
     setOpts(options) {
         const _ = this;
-        // console.log('StickIt:setOpts');
+        // console.log('stickIt:setOpts');
         _.opts = Object.assign({}, _.opts, options);
     }
 
     // Clone the element to stick
     cloneElement(){
         const _ = this;
-        // console.log('StickIt:cloneElement');
+        // console.log('stickIt:cloneElement');
 
         _.$clone = _.$el.cloneNode(true)
         _.$el.parentElement.appendChild(_.$clone)
@@ -63,7 +62,7 @@ export default class StickyIt {
 
     setSizes(){
         const _ = this;
-        // console.log('StickIt:setSizes');
+        // console.log('stickIt:setSizes');
 
         const rect = _.$clone.getBoundingClientRect()
         _.el = {
@@ -76,7 +75,7 @@ export default class StickyIt {
 
     scroll(){
         const _ = this;
-        console.log('StickIt:scroll');
+        console.log('stickIt:scroll');
         
         if(!_.isActive) return
 
@@ -125,7 +124,7 @@ export default class StickyIt {
 
     update(){
         const _ = this;
-        // console.log('StickIt:update');
+        // console.log('stickIt:update');
         
         if(_.opts.watchCSS) _.watchCSS()
 
@@ -147,8 +146,8 @@ export default class StickyIt {
 
         const afterContent = getComputedStyle( _.$el, ':after' ).content;
         
-        // activate if :after { content: 'stick-it' }
-        if ( afterContent.indexOf('stick-it') != -1 ) {
+        // activate if :after { content: 'sticky' }
+        if ( afterContent.indexOf('sticky') != -1 ) {
             _.isActive = true
         } else {
             _.isActive = false
@@ -158,7 +157,7 @@ export default class StickyIt {
 
     destroy() {
         const _ = this;
-        console.log('StickIt:destroy')
+        console.log('stickIt:destroy')
 
         _.$el.removeAttribute('style')
 
@@ -170,3 +169,22 @@ export default class StickyIt {
         window.removeEventListener('update', _.updateHanlder)
     }
 }
+
+
+}
+
+
+/**
+ * Export function that supports AMD, CommonJS and Plain Browser.
+ */
+((root, factory) => {
+    if (typeof exports !== 'undefined') {
+        module.exports = factory;
+    } else if (typeof define === 'function' && define.amd) {
+        define([], function() {
+            return factory;
+        });
+    } else {
+        root.stickIt = factory;
+    }
+})(this, stickIt);
