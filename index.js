@@ -66,8 +66,6 @@ class stickIt {
     setSizes(){
         const _ = this;
         // console.log('stickIt:setSizes');
-        //
-        console.log(this)
 
         const rect = _.$clone.getBoundingClientRect()
         _.el = {
