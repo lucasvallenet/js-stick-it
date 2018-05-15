@@ -13,10 +13,13 @@ class stickIt {
         _.opts = {
             bound: 'body',
             class: false,
-            offset: 0,
+            offset: {
+                top: 0,
+                bottom: 0
+            },
             watchCSS: false
         }
-        
+
         // Expend with default options
         _.opts = Object.assign({}, _.opts, options);
 
@@ -49,19 +52,22 @@ class stickIt {
         // console.log('stickIt:cloneElement');
 
         _.$clone = _.$el.cloneNode(true)
-        _.$el.parentElement.appendChild(_.$clone)
+        // _.$el.parentElement.appendChild(_.$clone)
+        _.$el.parentNode.insertBefore(_.$clone, _.$el.nextSibling);
 
         Object.assign(_.$clone.style, {
             zIndex: '-999',
             visibility: 'hidden'
         });
-        
+
         _.setSizes()
     }
 
     setSizes(){
         const _ = this;
         // console.log('stickIt:setSizes');
+        //
+        console.log(this)
 
         const rect = _.$clone.getBoundingClientRect()
         _.el = {
@@ -75,17 +81,17 @@ class stickIt {
     update(){
         const _ = this;
         // console.log('stickIt:update');
-        
+
         if(!_.isActive) return
 
         if(
-            !_.isSticky 
-            && window.scrollY + _.opts.offset >= _.el.offsetTop
-            && window.scrollY + _.opts.offset <= _.el.offsetTop + _.boundHeight - _.el.height
+            !_.isSticky
+            && window.scrollY + _.opts.offset.top >= _.el.offsetTop
+            && window.scrollY + _.opts.offset.top <= _.el.offsetTop + _.boundHeight - _.el.height - _.opts.offset.bottom
         ){
             Object.assign(_.$el.style, {
                 position: 'fixed',
-                top: `${_.opts.offset}px`,
+                top: `${_.opts.offset.top}px`,
                 left: `${_.el.offsetLeft}px`
             });
 
@@ -96,26 +102,26 @@ class stickIt {
             _.isSticky = true
 
         } else if(_.isSticky) {
-            if(window.scrollY + _.opts.offset < _.el.offsetTop) {
+            if(window.scrollY + _.opts.offset.top < _.el.offsetTop) {
                 _.$el.removeAttribute('style')
 
                 if(_.opts.class) {
                     _.$el.classList.remove(_.opts.class)
                 }
-                
+
                 _.isSticky = false
 
-            } else if (window.scrollY + _.opts.offset > _.el.offsetTop + _.boundHeight - _.el.height) {
+            } else if (window.scrollY + _.opts.offset.top > _.el.offsetTop + _.boundHeight - _.el.height - _.opts.offset.bottom) {
                 Object.assign(_.$el.style, {
                     position: '',
-                    top: `${_.boundHeight - _.el.height + _.opts.offset}px`,
+                    top: `${_.boundHeight - _.el.height - _.opts.offset.bottom}px`,
                     left: ''
                 });
 
                 if(_.opts.class) {
                     _.$el.classList.remove(_.opts.class)
                 }
-                
+
                 _.isSticky = false
             }
         }
@@ -124,7 +130,7 @@ class stickIt {
     resize(){
         const _ = this;
         // console.log('stickIt:resize');
-        
+
         if(_.opts.watchCSS) _.watchCSS()
 
         if(!_.opts.watchCSS || _.isActive) {
@@ -144,7 +150,7 @@ class stickIt {
         if ( !_.opts.watchCSS ) return;
 
         const afterContent = getComputedStyle( _.$el, ':after' ).content;
-        
+
         // activate if :after { content: 'sticky' }
         if ( afterContent.indexOf('sticky') != -1 ) {
             _.isActive = true
