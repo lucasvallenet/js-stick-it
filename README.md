@@ -18,7 +18,7 @@ npm i stick-it
 ```js
 import stickIt from 'stick-it'
 
-const Stky = new stickIt('js-sticky')
+const Stky = new stickIt('.js-sticky')
 ```
 
 ### Recommendation
@@ -28,11 +28,12 @@ The sticky element should be in `` position: absolute`` to avoid the content fro
 ## Options
 
 ```js
-const Stky = new stickIt('js-sticky', {
+const Stky = new stickIt('.js-sticky', {
     // options, defaults listed
     
     bound: 'body',
     // the bounding container
+    // can either be a string or a DOM element
     
     class: false,
     // the class to be added to the element when it is stuck

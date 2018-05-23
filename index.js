@@ -24,8 +24,8 @@ class stickIt {
         _.opts = Object.assign({}, _.opts, options);
 
         // Set DOM vars
-        _.$el = document.querySelector(element)
-        _.$bound = document.querySelector(_.opts.bound)
+        _.$el = (typeof element == 'string' || element instanceof String) ? document.querySelector(element) : element
+        _.$bound = (typeof _.opts.bound == 'string' || _.opts.bound instanceof String) ? document.querySelector(_.opts.bound) : _.opts.bound
 
         // Return if element/bound doesn't exist
         if(_.$el === undefined || _.$bound === undefined) return;
